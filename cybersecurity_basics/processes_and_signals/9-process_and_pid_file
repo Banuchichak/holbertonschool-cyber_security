@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# This script handles SIGTERM, SIGINT, and SIGQUIT with specific behaviors
+
+# Create the PID file containing the current process ID ($$)
+echo "$$" > /tmp/myscript.pid
+
+# Handle SIGINT (Ctrl+C)
+trap "echo 'Y U no love me?!'" SIGINT
+
+# Handle SIGQUIT and SIGTERM (Termination)
+# It displays a message for SIGTERM, deletes the PID file, and exits
+trap "echo 'I hate the kill command'; rm /tmp/myscript.pid; exit" SIGTERM
+trap "rm /tmp/myscript.pid; exit" SIGQUIT
+
+# Infinite loop
+while true
+do
+    echo "To infinity and beyond"
+    sleep 2
+done
